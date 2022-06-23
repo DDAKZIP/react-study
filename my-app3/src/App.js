@@ -1,11 +1,27 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 // import Counter from './Counter';
 // import InputSample from './InputSample';
 import UserList from './userList';
+import CreateUser from './CreateUser';
 
 //렌더링!
 function App() {
-  const users = [
+  const [inputs, setInputs] = useState({//입력값
+    username: '',
+    email: ''
+  });
+
+  const {username, email } = inputs;
+
+  const onChange = e => {//입력값이 변화했을 때
+    const { name, value } = e.target;
+    setInputs({//입력값 set
+      ...inputs,
+      [name]: value
+    });
+  };
+
+  const [users, setUsers] = useState([
     {
       id: 1,
       username: 'velopert',
@@ -21,15 +37,39 @@ function App() {
       username: 'liz',
       email: 'liz@example.com'
     }
-  ];
+  ]);
 
   const nextId = useRef(4);
   const onCreate = () => {
-    //나중에 구현할 배열에 항목 추가하는 로직
+    //배열에 항목 추가하는 로직
+    const user = {
+      id: nextId.current,
+      username,
+      email
+    };
+
+    //배열 새 항목 추가할 때 
+    setUsers([...users, user]);//spread 연산자 사용!
+    //setUsers(users.concat(user)); 
+
+    setInputs({
+      username: '',
+      email: ''
+    });
     nextId.current += 1;
   }
 
-  return <UserList users={users} />;
+  return (
+    <>
+      <CreateUser 
+        username={username}
+        email={email}
+        onChange={onChange}
+        onCreate={onCreate}
+      />
+      <UserList users={users} />
+    </>
+  );
 }
 
 export default App;

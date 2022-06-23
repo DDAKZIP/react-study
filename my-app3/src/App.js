@@ -49,14 +49,20 @@ function App() {
     };
 
     //배열 새 항목 추가할 때 
-    setUsers([...users, user]);//spread 연산자 사용!
-    //setUsers(users.concat(user)); 
+    // setUsers([...users, user]);//spread 연산자 사용!
+    setUsers(users.concat(user)); 
 
     setInputs({
       username: '',
       email: ''
     });
     nextId.current += 1;
+  }
+
+  const onRemove = id => {
+    //user.id가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듬
+    // = user.id가 id인 것을 제거함
+    setUsers(users.filter(user => user.id !== id));
   }
 
   return (
@@ -67,7 +73,7 @@ function App() {
         onChange={onChange}
         onCreate={onCreate}
       />
-      <UserList users={users} />
+      <UserList users={users} onRemove={onRemove} />
     </>
   );
 }

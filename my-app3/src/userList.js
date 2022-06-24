@@ -4,11 +4,11 @@ function User({user, onRemove, onToggle }) {
   return (
     <div>
       <b
-      style={{
-        cursor: 'pointer',
-        color: user.active ? 'green' : 'black'
-      }}
-      onClick={() => onToggle(user.id)}
+        style={{
+          cursor: 'pointer',
+          color: user.active ? 'green' : 'black'
+        }}
+        onClick={() => onToggle(user.id)}//클릭 시 onToggle에 user.id 전달!
       >
         {user.username}
       </b>

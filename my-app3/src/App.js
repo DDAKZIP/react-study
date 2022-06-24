@@ -6,18 +6,21 @@ import CreateUser from './CreateUser';
 
 //렌더링!
 function App() {
-  const [inputs, setInputs] = useState({//입력값
+  //const [<상태 값 저장 변수>, <상태 값 갱신 함수>] = useState(<상태 초기 값>);
+  const [inputs, setInputs] = useState({//입력값 변수로 저장 (dict)
     username: '',
     email: ''
   });
 
-  const {username, email } = inputs;
+  const {username, email } = inputs;//값 추출하기
 
-  const onChange = e => {//입력값이 변화했을 때
+  const onChange = e => {//입력값이 변경되었을 때
     const { name, value } = e.target;
+
+    //불변성 유지하며 객체중 일부만 update
     setInputs({//입력값 set
-      ...inputs,
-      [name]: value
+      ...inputs,//배열 복제 후
+      [name]: value //해당하는 부분만 덮어쓰기!
     });
   };
 
@@ -42,10 +45,11 @@ function App() {
     }
   ]);
 
-  const nextId = useRef(4);
-  const onCreate = () => {
-    //배열에 항목 추가하는 로직
-    const user = {
+  const nextId = useRef(4);//nextId : {current: 4}
+  console.log("nextId:", nextId);
+  const onCreate = () => {//배열에 항목 추가하는 로직
+    
+    const user = {//유저 만들어서~
       id: nextId.current,
       username,
       email
@@ -53,7 +57,7 @@ function App() {
 
     //배열 새 항목 추가할 때 
     // setUsers([...users, user]);//spread 연산자 사용!
-    setUsers(users.concat(user)); 
+    setUsers(users.concat(user));//2번째 방법
 
     setInputs({
       username: '',
@@ -63,11 +67,13 @@ function App() {
   };
 
   const onRemove = id => {
-    //user.id가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듬
+    //제거로직 => user.id가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듬
     // = user.id가 id인 것을 제거함
     setUsers(users.filter(user => user.id !== id));
   };
+
   const onToggle = id => {
+    console.log("onToggle id:", id);
     setUsers(
       users.map(user => //배열 업데이트 할 때도!
         user.id === id ? {...user, active: !user.active } : user//id값 비교해서 다르면 그대로, 같다면 active값 반전!

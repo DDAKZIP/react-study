@@ -46,7 +46,7 @@ function App() {
   ]);
 
   const nextId = useRef(4);//nextId : {current: 4}
-  console.log("nextId:", nextId);
+
   const onCreate = () => {//배열에 항목 추가하는 로직
     
     const user = {//유저 만들어서~
@@ -73,7 +73,6 @@ function App() {
   };
 
   const onToggle = id => {
-    console.log("onToggle id:", id);
     setUsers(
       users.map(user => //배열 업데이트 할 때도!
         user.id === id ? {...user, active: !user.active } : user//id값 비교해서 다르면 그대로, 같다면 active값 반전!

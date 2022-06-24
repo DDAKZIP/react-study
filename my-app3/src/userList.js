@@ -2,11 +2,11 @@ import React, {useEffect} from "react";
 
 function User({user, onRemove, onToggle }) {
   useEffect(() => {//첫번째 파라미터에는 함수, 두번째 파라미터에는 의존값 들어 있는 배열(deps)
-    console.log('user 값이 설정됨');
-    console.log(user);
+    // console.log('user 값이 설정됨');
+    // console.log(user);
     return () => {
-      console.log('user 가 바뀌기 전..');
-      console.log(user);
+      // console.log('user 가 바뀌기 전..');
+      // console.log(user);
     };
   }, [user]);
 

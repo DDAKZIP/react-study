@@ -1,14 +1,14 @@
 import React, {useEffect} from "react";
 
-function User({user, onRemove, onToggle }) {
-  useEffect(() => {//첫번째 파라미터에는 함수, 두번째 파라미터에는 의존값 들어 있는 배열(deps)
-    // console.log('user 값이 설정됨');
-    // console.log(user);
-    return () => {
-      // console.log('user 가 바뀌기 전..');
-      // console.log(user);
-    };
-  }, [user]);
+const User = React.memo(function User({user, onRemove, onToggle }) {
+  // useEffect(() => {//첫번째 파라미터에는 함수, 두번째 파라미터에는 의존값 들어 있는 배열(deps)
+  //   // console.log('user 값이 설정됨');
+  //   // console.log(user);
+  //   return () => {
+  //     // console.log('user 가 바뀌기 전..');
+  //     // console.log(user);
+  //   };
+  // }, [user]);
 
   return (
     <div>
@@ -26,7 +26,7 @@ function User({user, onRemove, onToggle }) {
       <button onClick={() => onRemove(user.id)}>삭제</button>
     </div>
   );
-}
+});
 
 function UserList({ users, onRemove, onToggle }) {
   return (
@@ -43,4 +43,4 @@ function UserList({ users, onRemove, onToggle }) {
   );
 }
 
-export default UserList;
+export default React.memo(UserList);

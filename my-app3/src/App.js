@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState, useMemo, useCallback } from 'react';
 // import Counter from './Counter';
 // import InputSample from './InputSample';
 import UserList from './userList';
@@ -7,7 +7,7 @@ import CreateUser from './CreateUser';
 function countActiveUsers(users) {
   console.log("활성 사용자 수 세는중,,");
   return users.filter(user => user.active).length;
-}
+};
 
 //렌더링!
 function App() {
@@ -52,7 +52,7 @@ function App() {
 
   const nextId = useRef(4);//nextId : {current: 4}
 
-  const onCreate = () => {//배열에 항목 추가하는 로직
+  const onCreate = useCallback(() => {//배열에 항목 추가하는 로직
     
     const user = {//유저 만들어서~
       id: nextId.current,
@@ -69,21 +69,27 @@ function App() {
       email: ''
     });
     nextId.current += 1;
-  };
+  });
 
-  const onRemove = id => {
+  const onRemove = useCallback(
+    id => {
     //제거로직 => user.id가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듬
     // = user.id가 id인 것을 제거함
     setUsers(users.filter(user => user.id !== id));
-  };
+    },
+    [users]
+  );
 
-  const onToggle = id => {
-    setUsers(
-      users.map(user => //배열 업데이트 할 때도!
-        user.id === id ? {...user, active: !user.active } : user//id값 비교해서 다르면 그대로, 같다면 active값 반전!
-      )
-    );
-  };
+  const onToggle = useCallback(
+    id => {
+      setUsers(
+        users.map(user => //배열 업데이트 할 때도!
+          user.id === id ? {...user, active: !user.active } : user//id값 비교해서 다르면 그대로, 같다면 active값 반전!
+        )
+      );
+    },
+    [users]
+  );
   const count = useMemo(() => countActiveUsers(users), [users]);
 
   return (
